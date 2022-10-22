@@ -52,7 +52,7 @@ public class TestMain_TestCleanStart_auth_qos1 {
 
         String broker       = "tcp://localhost:1883";
 
-        String clientId     = "JavaSample_revcevier";
+        String clientId     = "JavaSample_recver";
         
         String myuserName	= "IamPublisherOne";
         String mypwd		= "123456";

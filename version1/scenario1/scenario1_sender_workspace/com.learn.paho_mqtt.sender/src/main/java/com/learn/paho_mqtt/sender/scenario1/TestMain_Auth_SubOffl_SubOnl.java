@@ -78,7 +78,7 @@ public class TestMain_Auth_SubOffl_SubOnl {
         int qos             = 0;
 
         String brokerUri    = "tcp://localhost:1883";
-        String clientId     = "JavaSample_publisher";
+        String clientId     = "JavaSample_sender";
         
         String myuserName	= "IamPublisherOne";
         String mypwd		= "123456";
