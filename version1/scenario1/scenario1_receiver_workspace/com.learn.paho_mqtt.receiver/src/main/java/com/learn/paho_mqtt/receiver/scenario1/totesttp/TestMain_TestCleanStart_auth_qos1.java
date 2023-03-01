@@ -1,4 +1,4 @@
-package com.learn.paho_mqtt.receiver.scenario1;
+package com.learn.paho_mqtt.receiver.scenario1.totesttp;
 
 
 import java.util.Scanner;
@@ -48,9 +48,9 @@ public class TestMain_TestCleanStart_auth_qos1 {
         String topic        = "Resource1";
 
         String content      = "receiver";
-        int qos             = 0;
+        int qos             = 1;
 
-        String broker       = "tcp://localhost:1883";
+        String broker       = "tcp://192.168.239.137:1883";
 
         String clientId     = "JavaSample_recver";
         
@@ -114,7 +114,7 @@ public class TestMain_TestCleanStart_auth_qos1 {
             // 此时如果你还想获得订阅信息, 你还需要重新subscribe
             //connOpts.setSessionExpiryInterval(500L);
             //
-            //connOpts.setCleanStart(true);
+            connOpts.setCleanStart(false);
             
             // -----------------------set handler for asynchronous request--------------
             sampleClient.setCallback(new MqttCallback() {
@@ -167,7 +167,7 @@ public class TestMain_TestCleanStart_auth_qos1 {
             sampleClient.connect(connOpts);
 
             // subscribe
-            sampleClient.subscribe(topic,1);
+            sampleClient.subscribe(topic,qos);
             while(numberOfMessages < expectedNumberOfMessages) {
             	try {
     				Thread.sleep(200);

@@ -1,4 +1,4 @@
-package com.learn.paho_mqtt.sender.scenario1;
+package com.learn.paho_mqtt.sender.scenario1.totesttp;
 
 import org.eclipse.paho.mqttv5.client.DisconnectedBufferOptions;
 import org.eclipse.paho.mqttv5.client.IMqttToken;
@@ -74,11 +74,11 @@ public class TestMain_Auth_SubOffl_SubOnl {
 
         String topic        = "Resource1";
 
-        String content      = "Hello World!";
-        int qos             = 0;
+        String content      = "Hello_World!";
+        int qos             = 1;
 
-        String brokerUri    = "tcp://localhost:1883";
-        String clientId     = "JavaSample_sender";
+        String brokerUri    = "tcp://192.168.239.137:1883";							
+        String clientId     = "JavaSample_sender";									//测试中会看查这个是否会有影响字节数!!!!!!!!!!!!!!!!!!!
         
         String myuserName	= "IamPublisherOne";
         String mypwd		= "123456";
@@ -92,9 +92,14 @@ public class TestMain_Auth_SubOffl_SubOnl {
         	
         	// -----------------------set connection options-------------------------
             MqttConnectionOptions connOpts = new MqttConnectionOptions();
-            //connOpts.setCleanStart(false);
-            //connOpts.setSessionExpiryInterval(500L);
-            connOpts.setCleanStart(true);
+            connOpts.setCleanStart(false);
+            
+            
+            //connOpts.setSessionExpiryInterval(500L);								//测试中会看查这个是否会有影响字节数!!!!!!!!!!!!!!!!!!!
+            
+            
+            
+            //connOpts.setCleanStart(true);
 
             // authentication
             // https://mosquitto.org/man/mosquitto-conf-5.html
@@ -115,11 +120,14 @@ public class TestMain_Auth_SubOffl_SubOnl {
             	str_content_tmp.append(content +(statusUpdate+1));
 
             	message_tmp = new MqttMessage(str_content_tmp.toString().getBytes());
+            	//message_tmp = new MqttMessage("".getBytes());						//测试中会看查这个是否会有影响字节数!!!!!!!!!!!!!!!!!!!
+            	
             	message_tmp.setQos(qos);
             	message_tmp.setRetained(false);
        
             	System.out.println("published:"+str_content_tmp);
                 sampleClient.publish(topic, message_tmp);
+                //sampleClient.publish(topic+"1", message_tmp);
                 //
                 Thread.sleep(1000);
             }

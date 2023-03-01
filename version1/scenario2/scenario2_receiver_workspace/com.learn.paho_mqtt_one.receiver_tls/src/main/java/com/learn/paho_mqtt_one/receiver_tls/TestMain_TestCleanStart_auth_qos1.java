@@ -74,7 +74,7 @@ public class TestMain_TestCleanStart_auth_qos1 {
         //String brokerUri    = "ssl://127.0.0.1:8883";				//我发现ca是noname servercrt虽然设置的是192.168.239.137:8883 但是还是可以用127.0.0.1来访问
         
         //String clientId     = "JavaSample";
-        String clientId     = "JavaSample_revcevier";
+        String clientId     = "JavaSample_recver";
         
         String myuserName	= "IamPublisherOne";
         String mypwd		= "123456";

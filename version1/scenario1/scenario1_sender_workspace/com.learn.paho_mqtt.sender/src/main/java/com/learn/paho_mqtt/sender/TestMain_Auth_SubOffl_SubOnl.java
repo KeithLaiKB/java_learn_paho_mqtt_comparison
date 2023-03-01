@@ -74,10 +74,10 @@ public class TestMain_Auth_SubOffl_SubOnl {
 
         String topic        = "Resource1";
 
-        String content      = "Hello World!";
+        String content      = "hello";
         int qos             = 1;
 
-        String brokerUri    = "tcp://localhost:1883";
+        String brokerUri    = "tcp://192.168.239.137:1883";
         String clientId     = "JavaSample_sender";
         
         String myuserName	= "IamPublisherOne";
