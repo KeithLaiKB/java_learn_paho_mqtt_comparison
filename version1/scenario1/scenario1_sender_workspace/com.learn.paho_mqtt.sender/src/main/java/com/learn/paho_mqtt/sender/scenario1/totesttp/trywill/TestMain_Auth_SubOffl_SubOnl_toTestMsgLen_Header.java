@@ -69,10 +69,15 @@ import org.eclipse.paho.mqttv5.common.packet.UserProperty;
  *
  * 如果你不关闭 broker, 那么就 不需要 在mosquitto.config 中 设置 persistence true
  */
-/*
+
+/**
  * mqtt 不需要像 coap那样的resource 所以 循环可以直接放在主函数
- * */
-public class TestMain_Auth_SubOffl_SubOnl {
+ * 
+ * 
+ * 通过修改 发送的内容 来判断 MsgLen 那里会不会从1字节 变成2字节或以上,
+ * 结果是会的
+ */
+public class TestMain_Auth_SubOffl_SubOnl_toTestMsgLen_Header {
 
 	public static void main(String[] args) {
 
@@ -231,21 +236,50 @@ public class TestMain_Auth_SubOffl_SubOnl {
             //
             MqttMessage message_tmp=null;
             StringBuffer str_content_tmp = new StringBuffer("");
+            StringBuffer str_content_tmpp = new StringBuffer("a");
             for(; statusUpdate<=statusUpdateMaxTimes-1; statusUpdate++) {
 
-            	str_content_tmp.delete(0, str_content_tmp.length()-1+1);
-            	str_content_tmp.append(content +(statusUpdate+1));
+            	//str_content_tmp.delete(0, str_content_tmp.length()-1+1);
+            	//str_content_tmp.append(content +(statusUpdate+1));
 
-            	message_tmp = new MqttMessage(str_content_tmp.toString().getBytes());
+
+            	/**
+            	 * 通过修改 发送的内容 来判断 MsgLen 那里会不会从1字节 变成2字节或以上,
+            	 * 结果是会的
+            	 */
+            	str_content_tmpp.delete(0, str_content_tmpp.length()-1+1);
+            	str_content_tmpp.append(statusUpdate+1);
+            	for(int j=0;j<=200-1;j++) {
+            		str_content_tmpp.append("a");
+            	}
+            	
+            	message_tmp = new MqttMessage(str_content_tmpp.toString().getBytes());
+            	//message_tmp = new MqttMessage(str_content_tmp.toString().getBytes());
             	//message_tmp = new MqttMessage("".getBytes());						//测试中会看查这个是否会有影响字节数!!!!!!!!!!!!!!!!!!!
+
+            	
             	
             	message_tmp.setQos(qos);
             	message_tmp.setRetained(false);
        
             	System.out.println("published:"+str_content_tmp);
-                sampleClient.publish(topic, message_tmp);
-                //sampleClient.publish(topic+"2", message_tmp);
-                
+            	sampleClient.publish(topic, message_tmp);
+
+            	
+     
+                /*
+                sampleClient.publish(topic+"2", message_tmp);
+                sampleClient.publish(topic+"3", message_tmp);
+                sampleClient.publish(topic+"4", message_tmp);
+                sampleClient.publish(topic+"5", message_tmp);
+                sampleClient.publish(topic+"6", message_tmp);
+                sampleClient.publish(topic+"7", message_tmp);
+                sampleClient.publish(topic+"8", message_tmp);
+                sampleClient.publish(topic+"9", message_tmp);
+                sampleClient.publish(topic+"10", message_tmp);
+                sampleClient.publish(topic+"11", message_tmp);
+                sampleClient.publish(topic+"12", message_tmp);
+                */
                 
                 //
                 Thread.sleep(1000);

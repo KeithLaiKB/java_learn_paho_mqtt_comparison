@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @author laipl
  *
  */
-public class TestMain_TestCleanStart_auth_qos1 {
+public class TestMain_TestCleanStart_auth_qos_toTestTopicAliasInPub {
 	private static int expectedNumberOfMessages = 30;
 	private static int numberOfMessages = 0;
 	public static void main(String[] args) {
@@ -60,7 +60,7 @@ public class TestMain_TestCleanStart_auth_qos1 {
         
         MemoryPersistence persistence = new MemoryPersistence();
 
-        final Logger LOGGER = LoggerFactory.getLogger(TestMain_TestCleanStart_auth_qos1.class);
+        final Logger LOGGER = LoggerFactory.getLogger(TestMain_TestCleanStart_auth_qos_toTestTopicAliasInPub.class);
         //
         //
         try {
@@ -116,7 +116,14 @@ public class TestMain_TestCleanStart_auth_qos1 {
             //connOpts.setSessionExpiryInterval(500L);
             //
             connOpts.setCleanStart(false);
-            //connOpts.setUseSubscriptionIdentifiers(true);
+            
+            
+            
+            
+            
+            connOpts.setTopicAliasMaximum(30);		//它只影响connect, 因为他是pub
+            connOpts.setReceiveMaximum(50);			//它只影响connect, 因为他是pub
+            
             
             // -----------------------set handler for asynchronous request--------------
             sampleClient.setCallback(new MqttCallback() {
@@ -168,19 +175,26 @@ public class TestMain_TestCleanStart_auth_qos1 {
             // connect
             sampleClient.connect(connOpts);
 
-            
             // subscribe
             sampleClient.subscribe(topic,qos);
             
-            
-            /*
             // test connect ack中描述  和 publish的 topic alias
+            sampleClient.subscribe(topic+"2",qos);
+            sampleClient.subscribe(topic+"3",qos);
+            sampleClient.subscribe(topic+"4",qos);
+            sampleClient.subscribe(topic+"5",qos);
+            sampleClient.subscribe(topic+"6",qos);
+            sampleClient.subscribe(topic+"7",qos);
+            sampleClient.subscribe(topic+"8",qos);
+            sampleClient.subscribe(topic+"9",qos);
+            sampleClient.subscribe(topic+"10",qos);
+            sampleClient.subscribe(topic+"11",qos);
             sampleClient.subscribe(topic+"12",qos);
             
             
             String willResponseTopic = "replyTopic";
             sampleClient.subscribe(willResponseTopic,1);
-            */
+            
             
             
             

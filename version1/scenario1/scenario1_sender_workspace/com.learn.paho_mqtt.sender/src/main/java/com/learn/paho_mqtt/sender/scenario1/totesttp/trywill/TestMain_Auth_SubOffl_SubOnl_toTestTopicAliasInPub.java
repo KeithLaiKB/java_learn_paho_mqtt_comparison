@@ -71,8 +71,16 @@ import org.eclipse.paho.mqttv5.common.packet.UserProperty;
  */
 /*
  * mqtt 不需要像 coap那样的resource 所以 循环可以直接放在主函数
+ * 
+ * 一开始看到TopicAliasMaximum是10
+ * 于是我发送超过10个的topic 看结果
+ * 
+ * 结果
+ * 发现是 对面也是能接收到的
+ * 如果我一共有12个topic, 第11 个 和第12个topic 的publish 将不会有ID:Topic Alias 和 TopicAlias
+ * 
  * */
-public class TestMain_Auth_SubOffl_SubOnl {
+public class TestMain_Auth_SubOffl_SubOnl_toTestTopicAliasInPub {
 
 	public static void main(String[] args) {
 
@@ -189,8 +197,10 @@ public class TestMain_Auth_SubOffl_SubOnl {
             
             
             
-            //connOpts.setCleanStart(true);
+            //connOpts.setCleanStart(true);			//测试时候我是不打开的
+            
 
+            
             // authentication
             // https://mosquitto.org/man/mosquitto-conf-5.html
             // for mosquitto, anonymous log in is just allowed in local machine
@@ -215,12 +225,11 @@ public class TestMain_Auth_SubOffl_SubOnl {
             connOpts.setUserProperties(userDefinedProperties);
             connOpts.setWillMessageProperties(willProperties);
             connOpts.setWill(willResponseTopic, willMessage);
-
             
             
             
-            
-            
+            connOpts.setTopicAliasMaximum(30);		//它只影响connect, 因为他是pub
+            connOpts.setReceiveMaximum(50);			//它只影响connect, 因为他是pub
             
             
             
@@ -244,7 +253,17 @@ public class TestMain_Auth_SubOffl_SubOnl {
        
             	System.out.println("published:"+str_content_tmp);
                 sampleClient.publish(topic, message_tmp);
-                //sampleClient.publish(topic+"2", message_tmp);
+                sampleClient.publish(topic+"2", message_tmp);
+                sampleClient.publish(topic+"3", message_tmp);
+                sampleClient.publish(topic+"4", message_tmp);
+                sampleClient.publish(topic+"5", message_tmp);
+                sampleClient.publish(topic+"6", message_tmp);
+                sampleClient.publish(topic+"7", message_tmp);
+                sampleClient.publish(topic+"8", message_tmp);
+                sampleClient.publish(topic+"9", message_tmp);
+                sampleClient.publish(topic+"10", message_tmp);
+                sampleClient.publish(topic+"11", message_tmp);
+                sampleClient.publish(topic+"12", message_tmp);
                 
                 
                 //
