@@ -192,9 +192,18 @@ public class TestMain_TestCleanStart_auth_qos_toTestTopicAliasInPub {
             sampleClient.subscribe(topic+"12",qos);
             
             
+            
+            
+            
+            
+            //测试 SUBSCRIBE ACK 包里的 TOPIC Filter
+            String[] tps_tmp= {topic+"13",topic+"14"};
+            int[] tps_qos_tmp= {1,1};
+            sampleClient.subscribe(tps_tmp, tps_qos_tmp);
+            
+            
             String willResponseTopic = "replyTopic";
             sampleClient.subscribe(willResponseTopic,1);
-            
             
             
             
